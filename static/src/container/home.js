@@ -9,10 +9,24 @@ class Home extends React.Component {
     return <div>
       {Config.info.msg}<br/>
       Path: {this.props.urlPath}<br/>
-      <button onClick={()=>{this.props.printlog(Config.info.msg);}}>Print</button>
+      <button onClick={()=>{test()}}>Print</button>
+
+
     </div>;
   }
 }
+
+function test() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+             console.log(this.responseText);
+        }
+    };
+    xhttp.open("GET", "http://localhost:5000", true);
+    xhttp.send();
+}
+
 
 const mapStateToProps = (state)=>{
   return {

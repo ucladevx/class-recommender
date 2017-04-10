@@ -1,10 +1,12 @@
 NAME=${PWD##*/} 
 
-all: stop build
+all: stop build run
 
 stop:
 	- docker-compose stop
 
 build:
-	docker-compose up -d
+	docker-compose build
 
+run:
+	docker-compose up -d
