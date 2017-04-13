@@ -16,6 +16,13 @@ Then, simply run
 
 Which should spin up both of the containers. 
 
+
+If you navigate to localhost in your web browser, you should see a sample page with a black background. 
+If you clicke on the button, "Hello World!" Should be printed out to the console. 
+
+In addition if you look at your terminal output, you should see a recorded GET request for src
+
+# About the application
 If you want to learn more about the structure of the project, take a look [here](https://jcaip.github.io/Dockerizing-Web-Applications/)
 
 Essentially, docker lets us create containers - sort of like VM's but not entirely. This lets us manage dependencies easily and also deploy easily. 
