@@ -5,6 +5,7 @@ A dockerized version of flask and react
 
 # Layout
 Basically the src folder contains the backend and the static folder contains the frontend. 
+
 Flask + Gevent is used for the backend and a combination of Nginx + React is used for the frontend. 
 
 # Running the application
