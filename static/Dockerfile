@@ -1,4 +1,4 @@
-F0ROM node:latest
+FROM node:latest
 MAINTAINER Jesse Cai <jcjessecai@gmail.com>
 
 # install npm and node

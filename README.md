@@ -12,9 +12,13 @@ Flask + Gevent is used for the backend and a combination of Nginx + React is use
 To run, make sure you have [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) installed, and then clone the repo.
 Then, simply run 
 
-```make```
+```
+make
+```
 
 Which should spin up both of the containers. 
+
+After you see "attaching to ....." that means that you are ready to go.
 
 
 If you navigate to localhost in your web browser, you should see a sample page with a black background. 
