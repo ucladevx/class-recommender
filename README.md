@@ -22,7 +22,8 @@ After you see "attaching to ....." that means that you are ready to go.
 
 
 If you navigate to localhost in your web browser, you should see a sample page with a black background. 
-If you clicke on the button, "Hello World!" Should be printed out to the console. 
+
+If you click on the button, "Hello World!" should be printed out to the console. 
 
 In addition if you look at your terminal output, you should see a recorded GET request for src
 
