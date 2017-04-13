@@ -1,4 +1,4 @@
-FROM node:latest
+F0ROM node:latest
 MAINTAINER Jesse Cai <jcjessecai@gmail.com>
 
 # install npm and node
@@ -16,9 +16,11 @@ RUN cd /static && npm install
 
 ADD . /static
 
+#build the paage
 WORKDIR /static
 RUN npm run build
 
+# copy  over the necessary files
 RUN mkdir -p public && mkdir -p public/build
 RUN cp -r pages/* public && cp lib/build/main.css public/build && cp lib/build/main.js public/build
 
