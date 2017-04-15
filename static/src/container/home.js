@@ -9,7 +9,7 @@ class Home extends React.Component {
     return <div>
       {Config.info.msg}<br/>
       Path: {this.props.urlPath}<br/>
-      <button onClick={()=>{test()}}>Print</button>
+      <button onClick={()=>{test()}}>Print This</button>
 
 
     </div>;
