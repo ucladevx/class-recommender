@@ -4,3 +4,5 @@ flask-cors
 textract
 Werkzeug
 requests
+boto3
+flask-boto3
