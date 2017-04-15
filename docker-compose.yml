@@ -4,6 +4,9 @@ services:
         build: ./src
         ports:
             - "5000:5000"
+        environment:
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
     static:
         build: ./static
         ports:

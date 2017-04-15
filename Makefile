@@ -6,6 +6,7 @@ stop:
 	- docker-compose stop
 
 build:
+	- source /src/secrets.sh
 	docker-compose build
 
 run:
