@@ -31,7 +31,6 @@ In addition if you look at your terminal output, you should see a recorded GET r
 Navigate to static and run `npm install`. This will install the npm dependencies needed. Next, navigate to the `src` directory and run `npm run build-dev`. This will start the development server so you can make changes to the front-end and see the results in real time. Note that you will have to restart the docker image for backend changes. 
 
 # About the application
-If you want to learn more about the structure of the project, take a look [here](https://jcaip.github.io/Dockerizing-Web-Applications/)
 
 Essentially, docker lets us create containers - sort of like VM's but not entirely. This lets us manage dependencies easily and also deploy easily. 
 
