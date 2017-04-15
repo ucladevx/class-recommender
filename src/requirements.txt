@@ -1,3 +1,6 @@
 Flask
 gevent
 flask-cors
+textract
+Werkzeug
+requests
