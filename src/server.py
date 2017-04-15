@@ -3,6 +3,8 @@ from flask_cors import CORS, cross_origin
 from gevent.wsgi import WSGIServer
 from werkzeug.utils import secure_filename
 
+from utils import parse
+
 import os, sys
 import textract
 
@@ -38,7 +40,7 @@ def extract_text():
             file.save(filename)
             text = textract.process('./' + filename)
             os.remove(filename)
-            return text, 200
+            return parse.get_info(text), 200
 
         except:
             e = sys.exc_info()[0]
