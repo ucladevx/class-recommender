@@ -8,4 +8,3 @@ services:
         build: ./static
         ports:
             - "80:80"
-

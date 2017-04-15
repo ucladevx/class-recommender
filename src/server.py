@@ -3,20 +3,16 @@ from flask_cors import CORS, cross_origin
 from gevent.wsgi import WSGIServer
 from werkzeug.utils import secure_filename
 
-import os
+import os, sys
 import textract
 
-UPLOAD_FOLDER = '/uploads'
-ALLOWED_EXTENSIONS = set(['pdf'])
 
 app = Flask(__name__)
+app.config.from_object('config')
 CORS(app)
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #max file size is 16MB
-
 def allowed_file(filename):
-    return '.' in filename and filename.split('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.split('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
 @app.route('/', methods=['GET'])
@@ -39,17 +35,15 @@ def extract_text():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         try:
-            save_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(save_filename)
-            text = textrack.process(save_filename)
+            file.save(filename)
+            text = textract.process('./' + filename)
+            os.remove(filename)
             return text, 200
 
         except:
-            return 'Error saving file', 500
+            e = sys.exc_info()[0]
+            return e, 500
     
-        
-
-
 if __name__ == '__main__':
     http_server = WSGIServer(('', 5000), app)
     http_server.serve_forever()
