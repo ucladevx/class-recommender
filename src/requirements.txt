@@ -1,7 +1,6 @@
 Flask
 gevent
 flask-cors
-textract
 Werkzeug
 requests
 boto3

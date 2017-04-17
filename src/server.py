@@ -10,9 +10,8 @@ from werkzeug.utils import secure_filename
 
 from utils import parse_info, allowed_file
 
-import os, sys
+import os, sys, subprocess
 import json
-import textract
 
 app = Flask(__name__)
 CORS(app)
@@ -40,8 +39,7 @@ def extract_text():
 
         #gets the info
         file.save(filename)
-        text = textract.process('./' + filename)
-        os.remove(filename)
+        text = subprocess.check_output(["pdftotext", filename, "-"])
         json_info = parse_info(text) 
 
         with app.app_context():
