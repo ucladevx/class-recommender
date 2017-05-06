@@ -1,3 +1,6 @@
+// TODO figure out why home.scss can't be resolved. I get an error whenever I try to load it in. 
+
+//import 'home.scss';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -11,6 +14,11 @@ class Home extends React.Component {
       {Config.info.msg}<br/>
       Path: {this.props.urlPath}<br/>
       <button onClick={()=>{test()}}>Print dThissds</button>
+        <select>
+          <option>Summer Session A - 2017</option>
+          <option>Summer Session B - 2017</option>
+          <option>Summer Session C - 2017</option>
+      </select>
     </div>;
   }
 }

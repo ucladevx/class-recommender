@@ -15,6 +15,8 @@ import Scans from 'container/scans';
 import ManageScans from 'container/managescans';
 import Contact from 'container/contact';
  
+// This main.js file will be the center point of at least the Bruin Scanner part of the website. 
+
 // TODO We need to include the bruin scan logo above the navbar
 // TODO Navbar needs to be improved. That code can be found in view/navbar.js
 // TODO We need to figure out the content in the Account tab. Code in container/account.js
@@ -23,12 +25,17 @@ import Contact from 'container/contact';
 // TODO We need to figure out the content in the Contact tab. Code in container/contact.js
 // TODO We need to make the HTML dropdown menu look nicer and the different sessions
 // should cause different changes in the classes that we list. 
-//
+// TODO Need to figure out who is currently logged in, and need to put their name in the top left corner
+// TODO Need to figure out what to do when the user clicks the logout button
+// TODO Create two React Dropdown menus (one for majors and one for classes). These should be dynamic
+// because we are getting them from some database with that information. 
+// TODO Display the class name and pre requisites right underneath the two dropdowns
+// TODO Show sections and class timings and graph of grades
 
 
 class App extends React.Component {
   render(){
-    return <Provider store={store}>
+    return <div ><Provider store={store}>
       <ConnectedRouter history={history}>
         <div>
           <Navbar/>
@@ -40,14 +47,10 @@ class App extends React.Component {
             <Route path="/contact" component={Contact}/>
             <Redirect to="/"/>
           </Switch>
-          <select>
-            <option>Summer Session A - 2017</option>
-            <option>Summer Session B - 2017</option>
-            <option>Summer Session C - 2017</option>
-          </select>
         </div>
       </ConnectedRouter>
-    </Provider>;
+    </Provider>
+ </div>;
   }
 }
 
