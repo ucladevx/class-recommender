@@ -2,10 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 
-class About extends React.Component {
+class Scans extends React.Component {
   render(){
     return <div>
-      About<br/>
+      Scans<br/>
       Path: {this.props.urlPath}
     </div>;
   }
@@ -23,5 +23,5 @@ const mapDispatchToProps = (dispatch)=>{
 };
 
 
-About = connect(mapStateToProps, mapDispatchToProps)(About);
-export default About
+Scans = connect(mapStateToProps, mapDispatchToProps)(Scans);
+export default Scans

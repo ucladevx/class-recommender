@@ -3,15 +3,14 @@ import {connect} from 'react-redux';
 
 import Config from 'config';
 
+// This home.js file will serve as the home page for the class scanner portion of the project
 
 class Home extends React.Component {
   render(){
     return <div>
       {Config.info.msg}<br/>
       Path: {this.props.urlPath}<br/>
-      <button onClick={()=>{test()}}>Print This</button>
-
-
+      <button onClick={()=>{test()}}>Print dThissds</button>
     </div>;
   }
 }
