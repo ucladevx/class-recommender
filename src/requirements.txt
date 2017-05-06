@@ -1,4 +1,5 @@
 Flask
+Flask-OAuth
 gevent
 flask-cors
 Werkzeug
