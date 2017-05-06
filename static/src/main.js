@@ -1,24 +1,21 @@
 import 'main.scss';
 
-// react dependencies
 import React from 'react';
 import {Provider} from 'react-redux';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux';
 import {render} from 'react-dom';
 
-//reducer dependencies
 import {store, history} from 'reducer';
 
-// React components
 import Navbar from 'view/navbar';
 import Home from 'container/home';
 import Account from 'container/account';
 import Scans from 'container/scans';
 import ManageScans from 'container/managescans';
 import Contact from 'container/contact';
-
-// This main.js file will be the center point of at least the Bruin Scanner part of the website.
+ 
+// This main.js file will be the center point of at least the Bruin Scanner part of the website. 
 
 // TODO We need to include the bruin scan logo above the navbar
 // TODO Navbar needs to be improved. That code can be found in view/navbar.js
@@ -27,11 +24,11 @@ import Contact from 'container/contact';
 // TODO We need to figure out the content in the Manage Scans tab. Code in container/managescans.js
 // TODO We need to figure out the content in the Contact tab. Code in container/contact.js
 // TODO We need to make the HTML dropdown menu look nicer and the different sessions
-// should cause different changes in the classes that we list.
+// should cause different changes in the classes that we list. 
 // TODO Need to figure out who is currently logged in, and need to put their name in the top left corner
 // TODO Need to figure out what to do when the user clicks the logout button
 // TODO Create two React Dropdown menus (one for majors and one for classes). These should be dynamic
-// because we are getting them from some database with that information.
+// because we are getting them from some database with that information. 
 // TODO Display the class name and pre requisites right underneath the two dropdowns
 // TODO Show sections and class timings and graph of grades
 

@@ -1,14 +1,16 @@
+// TODO figure out why home.scss can't be resolved. I get an error whenever I try to load it in. 
+
+//import 'home.scss';
 import React from 'react';
 import {connect} from 'react-redux';
 
 import Config from 'config';
-import 'bootstrap-sass'
+
 // This home.js file will serve as the home page for the class scanner portion of the project
 
 class Home extends React.Component {
   render(){
-    return
-    <div>
+    return <div>
       {Config.info.msg}<br/>
       Path: {this.props.urlPath}<br/>
       <button onClick={()=>{test()}}>Print dThissds</button>
@@ -28,7 +30,7 @@ function test() {
              console.log(this.responseText);
         }
     };
-    xhttp.open("GET", "http://localhost:8000", true);
+    xhttp.open("GET", "http://localhost:5000", true);
     xhttp.send();
 }
 
