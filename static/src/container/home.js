@@ -5,10 +5,26 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Config from 'config';
+import Dropdown from 'react-dropdown'
+import {DropdownButton, ButtonGroup, Button, MenuItem} from 'react-bootstrap'
+
+const buttonGroupInstance = (arg) => (
+  <ButtonGroup>
+    <Button>arg</Button>
+    <Button>arg</Button>
+    <Button>arg</Button>
+  </ButtonGroup>
+);
+
 
 // This home.js file will serve as the home page for the class scanner portion of the project
 
 class Home extends React.Component {
+  constructor(props){
+    super();
+    //Call test and then set state to whatever is returned
+  }
+
   render(){
     return <div>
       {Config.info.msg}<br/>
@@ -19,7 +35,8 @@ class Home extends React.Component {
           <option>Summer Session B - 2017</option>
           <option>Summer Session C - 2017</option>
       </select>
-    </div>;
+      {buttonGroupInstance("Test")}
+    </div>
   }
 }
 

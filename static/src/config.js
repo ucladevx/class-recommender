@@ -4,7 +4,6 @@ export default {
   },
   nav: [
     ['Home', '/'],
-    ['About', '/about'],
     ['Account', '/account'],
     ['Scans', '/scans'],
     ['Manage Scans', '/managescans'],
