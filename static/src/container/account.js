@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import "bootstrap-sass";
+
 
 
 class Account extends React.Component {

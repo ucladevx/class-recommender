@@ -36,6 +36,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "bootstrap-sass": "^3.3.7",
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
     "react-redux": "^5.0.4",
@@ -44,6 +45,9 @@
     "redux": "^3.6.0"
   },
   "babel": {
-      "presets" : ["latest", "react"]
+    "presets": [
+      "latest",
+      "react"
+    ]
   }
 }
