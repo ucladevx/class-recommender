@@ -8,12 +8,12 @@ import {render} from 'react-dom';
 
 import {store, history} from 'reducer';
 
-import Navbar from 'view/navbar';
-import Home from 'container/home';
-import Account from 'container/account';
-import Scans from 'container/scans';
-import ManageScans from 'container/managescans';
-import Contact from 'container/contact';
+import Navbar from 'components/navbar/navbar';
+import Home from 'components/home';
+import Account from 'components/account';
+import Scans from 'components/scans';
+import ManageScans from 'components/managescans';
+import Contact from 'components/contact';
  
 // This main.js file will be the center point of at least the Bruin Scanner part of the website. 
 
