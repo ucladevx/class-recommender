@@ -9,13 +9,12 @@ import Dropdown from 'react-dropdown'
 import {DropdownButton, ButtonGroup, Button, MenuItem} from 'react-bootstrap'
 import SearchInput, {createFilter} from 'react-search-input'
 import Subjects from 'subjects'
-import ClassDropdown from './class_dropdown'
 
 const KEYS_TO_FILTERS = ['class.name']
 
 // This home.js file will serve as the home page for the class scanner portion of the project
 
-class Home extends React.Component {
+class ClassDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = { searchTerm: "", searchStarted: false };
@@ -26,16 +25,19 @@ class Home extends React.Component {
   }
 
   render(){
-    return( 
+    const filteredSubjects = Subjects.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+    return(
     <div>
-        <label>
-          <select className='selectSession'>
-            <option>Summer Session A - 2017</option>
-            <option>Summer Session B - 2017</option>
-            <option>Summer Session C - 2017</option>
-          </select>
-        </label>
-        <ClassDropdown />
+        <div className = 'dropdownContainer'>
+          <SearchInput className='search-input searchSubjects' onChange={this.searchUpdated} />
+              {filteredSubjects.map(Subjects => {
+                  return (
+                    <div key={Subjects.id}>
+                      <div className='dropdownItem'>{Subjects.class.name}</div>
+                    </div>
+                  )
+              })}
+          </div>
     </div>
     )
   }
@@ -68,6 +70,4 @@ const mapDispatchToProps = (dispatch)=>{
   };
 };
 
-
-Home = connect(mapStateToProps, mapDispatchToProps)(Home);
-export default Home
+export default ClassDropdown;

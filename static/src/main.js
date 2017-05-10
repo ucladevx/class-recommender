@@ -35,7 +35,7 @@ import Contact from 'components/contact';
 
 class App extends React.Component {
   render(){
-    return <div ><Provider store={store}>
+    return <div><Provider store={store}>
       <ConnectedRouter history={history}>
         <div>
           <Navbar/>
@@ -50,7 +50,8 @@ class App extends React.Component {
         </div>
       </ConnectedRouter>
     </Provider>
- </div>;
+    <div className='bottomBlueBar'></div>
+ </div>
   }
 }
 
