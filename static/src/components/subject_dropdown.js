@@ -9,37 +9,38 @@ import Dropdown from 'react-dropdown'
 import {DropdownButton, ButtonGroup, Button, MenuItem} from 'react-bootstrap'
 import SearchInput, {createFilter} from 'react-search-input'
 import Subjects from 'subjects'
-import SubjectDropdown from './subject_dropdown'
-import ClassDropdown from './class_dropdown'
 
 const KEYS_TO_FILTERS = ['class.name']
 
 // This home.js file will serve as the home page for the class scanner portion of the project
 
-class Home extends React.Component {
+class SubjectDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = { searchTerm: "", searchStarted: false };
     this.searchUpdated = this.searchUpdated.bind(this);
   }
- searchUpdated (term) {
+  searchUpdated (term) {
     this.setState({searchTerm: term, searchStarted: true})
   }
 
   render(){
-    return( 
+    console.log("rerendering");
+    const filteredSubjects = Subjects.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+    return(
     <div>
-        <label>
-          <select className='selectSession'>
-            <option>Summer Session A - 2017</option>
-            <option>Summer Session B - 2017</option>
-            <option>Summer Session C - 2017</option>
-          </select>
-        </label>
-        <div className = "DropdownContainer">
-          <SubjectDropdown />
-          <ClassDropdown />
-        </div>
+      <div className = "SubjectDropdownContainer">
+        <SearchInput className='search-input' onChange={this.searchUpdated} />
+            <div className = 'SubjectDropdown'>
+              {filteredSubjects.map(Subjects => {
+                  return (
+                    <div className = "dropdownItem" key={Subjects.id}>
+                      {Subjects.class.name}
+                    </div>
+                  )
+              })}
+            </div>
+      </div>
     </div>
     )
   }
@@ -72,6 +73,4 @@ const mapDispatchToProps = (dispatch)=>{
   };
 };
 
-
-Home = connect(mapStateToProps, mapDispatchToProps)(Home);
-export default Home
+export default SubjectDropdown;

@@ -3,19 +3,39 @@ export default
 {
   id: 1,
   class: {
-    name: 'CS 31',
+    name: 'Computer Science (COM SCI)',
   }
 }, 
 {
   id: 2,
   class: {
-    name: 'CS 32',
+    name: 'Mathematics (MATH)',
   }
 }, 
 {
   id: 3,
   class: {
-    name: 'CS 33',
+    name: 'Chemistry (CHEM)',
+  }
+},
+{
+  id: 4,
+  class: {
+    name: 'Physics (PHYSICS)',
+  }
+},
+{
+  id: 5,
+  class: {
+    name: 'Psychology (PSYCH)',
+  }
+},
+{
+  id: 6,
+  class: {
+    name: 'Biology (BIO)',
   }
 }
+
+
 ]

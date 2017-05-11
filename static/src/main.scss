@@ -5,20 +5,56 @@ body {
 }
 
 .dropdownItem{
-	width: 315px;
-	background: #efefef; 
-	background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);  
-	background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%); 
-	border-radius: 4px;
-	margin-top: 5px;
-	margin-bottom: 2px;
+	width: 390px;
+	font-family: 'arial';
+	font: sans-serif;
+	font-size: 13px;
+	color: #1AAEEC;
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 
-.dropdownContainer{
-	margin-top: 15px;
-	margin-left: 270px;
-	width:200px;
-	border-color: blue;
+.dropdownItem:hover{
+	background: #1AAEEC;
+	color: #333333;
+}
+
+.DropdownContainer{
+	width: 100%;
+	margin-top: 10px;
+}
+
+.SubjectDropdownContainer{
+	float: left;
+	margin-left: 250px;
+}
+
+.ClassDropdownContainer{
+	float:left;
+	margin-left: 50px;
+}
+
+.SubjectDropdown{
+	float: left;
+	width:395px;
+	border: solid;
+	border-width: 2px;
+	border-color: #1AAEEC;
+	border-radius: 4px;
+	max-height: 68px;
+	overflow: auto;
+}
+
+.ClassDropdown{
+	float: left;
+	width:395px;
+	border: solid;
+	border-width: 2px;
+	border-color: #1AAEEC;
+	border-radius: 4px;
+	max-height: 68px;
+	overflow: auto;
 }
 
 .navBarBackground{
@@ -65,14 +101,15 @@ body {
 
 .selectSession{
 	margin-top: 25px;
+	margin-bottom: 25px;
 	margin-left: 270px;
 	font-stretch: ultra-expanded;
 }
 
 
 .search-input > input {
-  width: 200%;
-  margin-top: 24px;
+	width: 400px;
+  margin-bottom: 5px;
   font-size: 12px;
   border-color: #1AAEEC;
   outline-style: none;
@@ -86,11 +123,7 @@ body {
 
 .search-input > input:focus {
   outline: none;
-}
 
-.search-input.searchSubjects
-{
-	width: 80%;
 }
 
 

@@ -20,24 +20,27 @@ class ClassDropdown extends React.Component {
     this.state = { searchTerm: "", searchStarted: false };
     this.searchUpdated = this.searchUpdated.bind(this);
   }
- searchUpdated (term) {
+  searchUpdated (term) {
     this.setState({searchTerm: term, searchStarted: true})
   }
 
   render(){
+    console.log("rerendering");
     const filteredSubjects = Subjects.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     return(
     <div>
-        <div className = 'dropdownContainer'>
-          <SearchInput className='search-input searchSubjects' onChange={this.searchUpdated} />
+      <div className = "ClassDropdownContainer">
+        <SearchInput className='search-input' onChange={this.searchUpdated} />
+            <div className = 'ClassDropdown'>
               {filteredSubjects.map(Subjects => {
                   return (
-                    <div key={Subjects.id}>
-                      <div className='dropdownItem'>{Subjects.class.name}</div>
+                    <div className = "dropdownItem" key={Subjects.id}>
+                      {Subjects.class.name}
                     </div>
                   )
               })}
-          </div>
+            </div>
+      </div>
     </div>
     )
   }
