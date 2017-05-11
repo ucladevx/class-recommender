@@ -27,6 +27,16 @@ module.exports = {
         use: [{loader: "babel-loader"}],
       },
     ],
+    loaders: [ 
+      {
+        test: /\.js|.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader',
+      }, 
+      {
+        test: /\.(png|jpg)$/, loader: 'file'
+      }
+    ]
   },
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],

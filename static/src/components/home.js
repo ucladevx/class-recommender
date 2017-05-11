@@ -7,36 +7,41 @@ import {connect} from 'react-redux';
 import Config from 'config';
 import Dropdown from 'react-dropdown'
 import {DropdownButton, ButtonGroup, Button, MenuItem} from 'react-bootstrap'
+import SearchInput, {createFilter} from 'react-search-input'
+import Subjects from 'subjects'
+import SubjectDropdown from './subject_dropdown'
+import ClassDropdown from './class_dropdown'
 
-const buttonGroupInstance = (arg) => (
-  <ButtonGroup>
-    <Button>arg</Button>
-    <Button>arg</Button>
-    <Button>arg</Button>
-  </ButtonGroup>
-);
-
+const KEYS_TO_FILTERS = ['class.name']
 
 // This home.js file will serve as the home page for the class scanner portion of the project
 
 class Home extends React.Component {
-  constructor(props){
-    super();
-    //Call test and then set state to whatever is returned
+  constructor(props) {
+    super(props);
+    this.state = { searchTerm: "", searchStarted: false };
+    this.searchUpdated = this.searchUpdated.bind(this);
+  }
+ searchUpdated (term) {
+    this.setState({searchTerm: term, searchStarted: true})
   }
 
   render(){
-    return <div>
-      {Config.info.msg}<br/>
-      Path: {this.props.urlPath}<br/>
-      <button onClick={()=>{test()}}>Print dThissds</button>
-        <select>
-          <option>Summer Session A - 2017</option>
-          <option>Summer Session B - 2017</option>
-          <option>Summer Session C - 2017</option>
-      </select>
-      {buttonGroupInstance("Test")}
+    return( 
+    <div>
+        <label>
+          <select className='selectSession'>
+            <option>Summer Session A - 2017</option>
+            <option>Summer Session B - 2017</option>
+            <option>Summer Session C - 2017</option>
+          </select>
+        </label>
+        <div className = "DropdownContainer">
+          <SubjectDropdown />
+          <ClassDropdown />
+        </div>
     </div>
+    )
   }
 }
 
