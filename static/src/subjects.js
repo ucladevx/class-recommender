@@ -2,40 +2,45 @@ export default
 [
 {
   id: 1,
-  class: {
+  subject: {
     name: 'Computer Science (COM SCI)',
+    classes: ['COM SCI 31 - Introduction to Computer Science I', 'COM SCI 32 - Introduction to Computer Science II', 'COM SCI 33 - Introduction to Computer Organization', 'COM SCI 35L - Software Construction Laboratory', 'COM SCI 111 - Operating Systems Principles']
   }
+
 }, 
 {
   id: 2,
-  class: {
+  subject: {
     name: 'Mathematics (MATH)',
+    classes: ['MATH 31A', 'MATH 32A', 'MATH 32B']
   }
 }, 
 {
   id: 3,
-  class: {
+  subject: {
     name: 'Chemistry (CHEM)',
+    classes: []
   }
 },
 {
   id: 4,
-  class: {
+  subject: {
     name: 'Physics (PHYSICS)',
+    classes: []
   }
 },
 {
   id: 5,
-  class: {
+  subject: {
     name: 'Psychology (PSYCH)',
+    classes: []
   }
 },
 {
   id: 6,
-  class: {
+  subject: {
     name: 'Biology (BIO)',
+    classes: []
   }
 }
-
-
 ]

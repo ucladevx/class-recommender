@@ -10,14 +10,14 @@ import {DropdownButton, ButtonGroup, Button, MenuItem} from 'react-bootstrap'
 import SearchInput, {createFilter} from 'react-search-input'
 import Subjects from 'subjects'
 
-const KEYS_TO_FILTERS = ['class.name']
+const KEYS_TO_FILTERS = ['subject.name']
 
 // This home.js file will serve as the home page for the class scanner portion of the project
 
 class ClassDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { searchTerm: "", searchStarted: false };
+    this.state = { searchTerm: "", searchStarted: false, classList: [] };
     this.searchUpdated = this.searchUpdated.bind(this);
   }
   searchUpdated (term) {
@@ -35,7 +35,7 @@ class ClassDropdown extends React.Component {
               {filteredSubjects.map(Subjects => {
                   return (
                     <div className = "dropdownItem" key={Subjects.id}>
-                      {Subjects.class.name}
+                      {Subjects.subject.name}
                     </div>
                   )
               })}

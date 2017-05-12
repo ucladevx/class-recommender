@@ -5,37 +5,36 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Config from 'config';
-import Dropdown from 'react-dropdown';
-import {DropdownButton, ButtonGroup, Button, MenuItem} from 'react-bootstrap';
-import SearchInput, {createFilter} from 'react-search-input';
+
 import Subjects from 'subjects';
-import DropdownParent from './dropdowns/dropdown_parent';
+import SubjectDropdown from './subject_dropdown';
+import ClassDropdown from './class_dropdown';
+
 
 // This home.js file will serve as the home page for the class scanner portion of the project
 
-class Home extends React.Component {
+class DropdownParent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { searchTerm: "", searchStarted: false };
-    this.searchUpdated = this.searchUpdated.bind(this);
-  }
- searchUpdated (term) {
-    this.setState({searchTerm: term, searchStarted: true})
+    this.state = {propsForClassDropdown: []};
+    this.inputClasses = this.inputClasses.bind(this);
   }
 
+  inputClasses(list){
+      console.log("get classes:");
+      console.log(list);
+       console.log(this.state);
+      this.setState({propsForClassDropdown:[]});
+      this.setState({propsForClassDropdown: this.state.propsForClassDropdown.concat(list)});
+     
+  }
+
+
   render(){
-    return( 
-    <div>
-        <label>
-          <select className='selectSession'>
-            <option>Summer Session A - 2017</option>
-            <option>Summer Session B - 2017</option>
-            <option>Summer Session C - 2017</option>
-          </select>
-        </label>
-        <div>
-          <DropdownParent />
-        </div>
+    return(
+    <div className = "DropdownContainer">
+      <SubjectDropdown triggerListChange ={(classList)=>this.inputClasses(classList)} />
+      <ClassDropdown />
     </div>
     )
   }
@@ -68,6 +67,4 @@ const mapDispatchToProps = (dispatch)=>{
   };
 };
 
-
-Home = connect(mapStateToProps, mapDispatchToProps)(Home);
-export default Home
+export default DropdownParent;
