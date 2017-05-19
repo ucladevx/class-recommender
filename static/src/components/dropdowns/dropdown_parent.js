@@ -16,17 +16,17 @@ import ClassDropdown from './class_dropdown';
 class DropdownParent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {propsForClassDropdown: []};
+    this.state = {
+      ListForClassDropdown: []
+    };
+
     this.inputClasses = this.inputClasses.bind(this);
   }
 
-  inputClasses(list){
-      console.log("get classes:");
-      console.log(list);
-       console.log(this.state);
-      this.setState({propsForClassDropdown:[]});
-      this.setState({propsForClassDropdown: this.state.propsForClassDropdown.concat(list)});
-     
+  inputClasses(classObject){
+      console.log(classObject);
+      this.setState({ListForClassDropdown: classObject.classes});
+      // this.setState({ListForClassDropdown: this.state.ListForClassDropdown.concat(classObject.classes)});
   }
 
 
@@ -34,7 +34,7 @@ class DropdownParent extends React.Component {
     return(
     <div className = "DropdownContainer">
       <SubjectDropdown triggerListChange ={(classList)=>this.inputClasses(classList)} />
-      <ClassDropdown />
+      <ClassDropdown classList={this.state.ListForClassDropdown} />
     </div>
     )
   }

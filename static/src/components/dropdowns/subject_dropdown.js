@@ -25,7 +25,7 @@ class SubjectDropdown extends React.Component {
   }
 
   onItemClick(item, e) {  
-    this.props.triggerListChange(item.subject.classes);
+    this.props.triggerListChange(item.subject);
   }
 
   render(){

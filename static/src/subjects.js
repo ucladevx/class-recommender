@@ -4,9 +4,30 @@ export default
   id: 1,
   subject: {
     name: 'Computer Science (COM SCI)',
-    classes: ['COM SCI 31 - Introduction to Computer Science I', 'COM SCI 32 - Introduction to Computer Science II', 'COM SCI 33 - Introduction to Computer Organization', 'COM SCI 35L - Software Construction Laboratory', 'COM SCI 111 - Operating Systems Principles']
+    classes:
+    [
+    {
+      tag: 1,
+      name: 'COM SCI 31 - Introduction to Computer Science I'
+    },
+    {
+      tag: 2,
+      name: 'COM SCI 32 - Introduction to Computer Science II'
+    },
+    {
+      tag: 3,
+      name: 'COM SCI 33 - Introduction to Computer Organization'
+    },
+    {
+      tag: 4,
+      name: 'COM SCI 35L - Software Construction Laboratory'
+    },
+    {
+      tag: 5,
+      name: 'COM SCI 111 - Operating Systems Principles'
+    }
+    ]
   }
-
 }, 
 {
   id: 2,

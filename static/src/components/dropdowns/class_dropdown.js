@@ -10,8 +10,6 @@ import {DropdownButton, ButtonGroup, Button, MenuItem} from 'react-bootstrap'
 import SearchInput, {createFilter} from 'react-search-input'
 import Subjects from 'subjects'
 
-const KEYS_TO_FILTERS = ['subject.name']
-
 // This home.js file will serve as the home page for the class scanner portion of the project
 
 class ClassDropdown extends React.Component {
@@ -24,18 +22,38 @@ class ClassDropdown extends React.Component {
     this.setState({searchTerm: term, searchStarted: true})
   }
 
+  onItemClick(item, e) {  
+    console.log(item.subject);
+  }
+
   render(){
-    console.log("rerendering");
-    const filteredSubjects = Subjects.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+
+    if(!this.props.classList)
+      this.props.classList = [];
+
+    let KEYS_TO_FILTERS = [];
+
+    if(!this.props.classList)
+       KEYS_TO_FILTERS = [];
+    else{
+      KEYS_TO_FILTERS = ['name'];
+    }
+
+    var list = this.props.classList;
+
+    console.log("Keys to filters");
+    console.log(this.props.classList);
+    const filteredSubjects = this.props.classList.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     return(
     <div>
       <div className = "ClassDropdownContainer">
         <SearchInput className='search-input' onChange={this.searchUpdated} />
             <div className = 'ClassDropdown'>
-              {filteredSubjects.map(Subjects => {
+              {filteredSubjects.map(list => {
+                  let itemClick = this.onItemClick.bind(this, this.props.classList);
                   return (
-                    <div className = "dropdownItem" key={Subjects.id}>
-                      {Subjects.subject.name}
+                    <div className = "dropdownItem" key={this.props.classList.tag} onClick={itemClick}>
+                      {this.props.classList.name}
                     </div>
                   )
               })}
