@@ -1,13 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import AccountForm from './account_form'
 
 
 class Account extends React.Component {
   render(){
-    return <div>
-      Account<br/>
-      Path: {this.props.urlPath}
-    </div>;
+    return( 
+      <div className = "accountFormContainer">
+        <AccountForm />
+      </div>
+    );
   }
 }
 
