@@ -1,0 +1,1 @@
+//class information that shows up when you select a subject and then the class
