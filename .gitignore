@@ -1,3 +1,5 @@
 static/node_modules
 static/lib
 static/public
+
+secrets.sh
