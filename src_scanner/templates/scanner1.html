@@ -1,0 +1,613 @@
+<!-- base.html -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+{% load staticfiles %}
+
+<html>
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>
+	  {% block title %}
+		  {% if request.user.is_authenticated %}
+			  Scanner
+		  {% else %}
+			  Login
+		  {% endif %}
+	  {% endblock %}
+	</title>
+
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}"> -->
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+	<Script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+</head> 
+
+<!-- xs (phones), sm (tablets), md (desktops), and lg (larger desktops) -->
+
+<body>
+
+	<div class="header">
+		<div class="mid">
+			<div>
+				<a href="/"><img class="logo" src="{% static 'images/logo.png'%}"></a>
+			</div>
+			<div class="links">
+			 	<a href="/account">Account</a>
+			 	<a href="/manage">Scan</a>
+			 	<a href="/manage">Manage</a>
+			 	<a href="/contact">Contact</a>
+				{% if request.user.is_authenticated %}
+					<a href="/logout/">Logout</a>
+			 	{% else %}
+					<a href="/">Login</a>
+			 	{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div hidden class="loading">Loading...</div>
+	<div hidden class="loader"></div>
+
+	<div class="wrapper">
+
+		<select class="form-control term">
+		  <option>Summer Session A</option>
+		  <option>Summer Session C</option>
+		</select>
+
+
+		<div class="left">
+			<div class="subjects">
+
+		        <div class="head">
+		        	<img class="icon" src="{% static 'images/world.png'%}"/>
+			        Subject Areas
+			        <hr>
+			        <input type="text" class="form-control search"
+	        		onkeyup="searchFunction('subjects')" placeholder="Search..." >
+		        </div>
+
+		        <div class="body">
+
+				  <select size="6" class="form-control" id="subjects">
+				      {% for subject in subjects %}
+				      	<option>{{ subject }}</option>
+				      {% endfor %}
+				  </select>
+
+		        </div>
+		    </div>
+
+		    <div class="classes">
+
+		        <div class="head">
+		        	<img class="icon" src="{% static 'images/notepad.png'%}"/>
+					Classes
+					<hr>
+					<input type="text" class="form-control search"
+					onkeyup="searchFunction('classes')" placeholder="Search..." >
+		        </div>
+
+		        <div class="body">
+		          <select size="6" class="form-control" id="classes">
+			          <!-- {% for course in courses %}
+			          	<option>{{ course }}</option>
+			          {% endfor %} -->
+		          </select>
+		        </div>
+
+		    </div>
+
+		</div>
+
+		<div class="right">
+
+			<div class="overview">
+
+		        <div class="head">
+		        	<img class="icon" src="{% static 'images/bars.png'%}"/>
+		          	Overview
+		          	<hr>
+		          	<h4>CS 111 - Operating Systems</h4>
+					<!-- <div class="prereqs">Pre-Requisities: CS 31, 32, 33</div> -->
+					<hr>
+				</div>
+
+				<div class="body" id="overview">
+
+					<div class="labels">
+						<div>Section</div>
+						<div>Status</div>
+						<div class="tohide">Date/Time</div>
+						<div class="tohide">Location</div>
+						<div>Instructor</div>
+					</div>
+
+					<div class="lec">
+						<div class="data">
+							<div style="font-weight: bold">
+								<span class="glyphicon glyphicon-triangle-right Lec1"
+								onclick="showDiscussions('Lec1')"></span>
+								Lec 1
+							</div>
+							<div>Open</div>
+							<div class="tohide">MWF 1pm-2pm</div>
+							<div class="tohide">Royce</div>
+							<div>Eggert</div>
+						</div>
+						<div hidden class="data discussionLec1">
+							<div style="font-weight: bold" class="disc">
+								<input class="check" type="checkbox" name="{{ key }}" value="{{ key }}:{{ discussion }}">	
+								Disc 1
+							</div>
+							<div>Open</div>
+							<div class="tohide">MWF 1-2</div>
+							<div class="tohide">Royce</div>
+							<div>TA</div>
+						</div>
+					</div>
+
+					<div class="lec">
+						<div class="data">
+							<div style="font-weight: bold">
+								<span class="glyphicon glyphicon-triangle-right Lec2"
+								onclick="showDiscussions('Lec2')"></span>
+								Lec 2
+							</div>
+							<div>Open</div>
+							<div class="tohide">T TR 2-4</div>
+							<div class="tohide">Franz</div>
+							<div>Eggert</div>
+						</div>
+						<div hidden class="data discussionLec2">
+							<div style="font-weight: bold" class="disc">
+								<input class="check" type="checkbox" name="{{ key }}" value="{{ key }}:{{ discussion }}">	
+								Disc 1
+							</div>
+							<div>Open</div>
+							<div class="tohide">MWF 1-2</div>
+							<div class="tohide">Royce</div>
+							<div>TA</div>
+						</div>
+					</div>
+
+				</div>
+
+
+
+				<div class="foot">
+					<div id="sections">
+						Lec 1
+					</div>
+					<button class="btn" id="scan">Click to Scan</button>
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+<style>
+
+	/* GENERAL */
+	body {
+	  background: #6CD3F8;
+	  /*background: -webkit-linear-gradient(top left, #6CD3F8 50%, #E0F7FE 100%);
+			background: linear-gradient(to bottom right, #6CD3F8 50%, #E0F7FE 100%);*/
+	}
+	.header {
+		height: auto;
+		background: #00B2F3;
+		overflow: auto;
+		width:100%;
+		text-align:center;
+		top:30%;
+		position:relative;
+	}
+	.term {
+	  color: #00B2F3;
+	  background: #E0F7FE;
+	  margin: 10px 0px;
+	  border: 0px;
+	  width: 170px;
+	}
+	.wrapper {
+	  padding: 0% 10%;
+	}
+	.subjects, .classes, .overview {
+	  background: #E0F7FE;
+	  border-radius: 10px;
+	  -moz-border-radius: 10px;
+	  -webkit-border-radius: 10px;
+	}
+
+
+	/* SUBJECT AND COURSES */
+	::-webkit-input-placeholder {
+		color: #00B2F3;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	   color: #00B2F3;
+	   opacity:  1;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+	   color: #00B2F3;
+	   opacity:  1;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	   color: #00B2F3;
+	}
+	.search {
+	  color: #00B2F3;
+	  border: 0px solid red;
+	  border-radius: 10px;
+	  width: calc(100% - 20px);
+	  height: 25px;
+	  margin-top: 5px;
+	  margin-left: 10px;
+	}
+	.icon {
+	  width: 20px;
+	  height: 20px;
+	  margin: 0px 4px 0px 5px;
+	  float: left;
+	}
+	hr {
+	  border-color: #00B2F3;
+	  margin: 3px 0;
+	}
+	.head {
+		color: #265C82;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-weight: normal;
+		font-size: 14px;
+		padding: 5px 0px;
+	}
+
+	.body {
+	  	padding-left: 10px;
+	  	color: #00B2F3;
+	  	overflow-y: scroll;
+	  	flex: 1 0 0;
+	}
+	.body > select > option { 
+		padding: 3px 5px;
+		cursor: default;
+	}
+	.body > select > option:checked { 
+		box-shadow: 0 0 10px 100px #6CD3F8 inset;
+	}
+	.body > select { 
+		height: 100%;
+		width: calc(100% - 10px);
+		font-size: 13px;
+		color: #00B2F3;
+		border: 1px solid #00B2F3;
+		padding: 0px 0px;
+		background: #E0F7FE;
+	}
+
+
+	/* OVERVIEW */
+	h4 {
+		margin: 0;
+		color: #265C82;
+		font-weight: 300;
+		padding: 5px 10px;
+	}
+	.lec{
+		padding-bottom: 30px;
+	}
+	.disc {
+		padding-left: 10px;
+	}
+	.labels > div {
+		float:left;
+		width: 20%;
+		font-weight: bold;
+		padding-bottom: 5px;
+	}
+	.data > div {
+		float:left;
+		width: 20%;
+		padding-bottom: 5px;
+		font-size: 13px;
+		padding-right: 5px;
+	}
+	.data {
+		clear: both;
+	}
+	@media only screen and (max-width: 1000px){
+		.labels > div {
+			float:left;
+			width: 33%;
+			font-weight: bold;
+			padding-bottom: 5px;
+		}
+		.data > div {
+			float:left;
+			width: 33%;
+			padding-bottom: 5px;
+		}
+		.tohide {
+			display: none;
+		}
+	}
+	body #overview {
+		overflow: scroll;
+	}
+	.foot {
+		position: absolute;
+		bottom: 0;
+		height: 100px;
+		width: 100%;
+		padding-left:0px;
+		background: #00B2F3;
+	}
+	#scan {
+		position: absolute;
+		right: 10%;
+		top: 30%;
+		background: #00B2F3;
+		border: 1px solid #265C82;
+		border-radius: 10px;
+		color: #E0F7FE;
+		font-size: 12px;
+		padding: 2% 4%;
+	}
+	#sections {
+		position: absolute;
+		height: 75%;
+		width: 50%;
+		left: 5%;
+		margin: 3% 0px;
+		padding: 5px 10px;
+		border: 1px solid #265C82;
+		border-radius: 10px;
+		color: #E0F7FE;
+	}
+	
+
+
+	/* BOX SIZES */
+	.subjects {
+	  width: 100%;
+	  height: 200px;
+	}
+	.classes {
+	  width: 100%;
+	  height: 200px;
+	  margin-top: 5px;
+	}
+	.overview {
+	  width: 100%;
+	  height: 405px;
+	  position: relative;
+	}
+	.left {
+	  width: 50%;
+	  float: left;
+	  margin-right: 5px;
+	  margin-bottom: 3%;
+	  min-width: 350px;
+	}
+	.right {
+	  width: calc(50% - 10px);
+	  float: left;
+	  min-width: 350px;
+	  margin-bottom: 3%;
+	}
+
+
+
+	/* HEADER */
+	.mid {
+	  width: 100%;
+	  text-align: center;
+	  float: left;
+	  position: relative;
+	}
+	.logo {
+	  max-width: 30%;
+	  margin: 10px 0px;
+	}
+	.links > a {
+	  color: rgba(255, 255, 255, 0.8);
+	  font-size: 16px;
+	  padding: 0px 10px;
+	}
+	.links {
+	  /*padding-left: 100px;*/
+	  padding-bottom: 10px;
+	}
+
+
+
+	/* LOADING */
+	.loading {
+
+	  color: black;
+
+	  /* TO CENTER IT */
+	  margin-top: -75px;  /* half image height */
+	  margin-left: -30px;  /* half image width */
+	  position: fixed; /* or absolute */
+	  top: 50%;
+	  left: 50%;
+
+	}
+	.loader {
+	    border: 10px solid black; /* Light grey */
+	    border-top: 10px solid #33A2FF; /* Blue */
+	    border-radius: 50%;
+	    width: 100px;
+	    height: 100px;
+
+	    /* TO CENTER IT */
+	    margin-top: -50px;  /* half image height */
+	    margin-left: -50px;  /* half image width */
+	    position: fixed; /* or absolute */
+	    top: 50%;
+	    left: 50%;
+	    z-index: 999;
+
+	    animation: spin 1.5s linear infinite;
+	}
+
+
+	@keyframes spin {
+	    0% { transform: rotate(0deg); }
+	    100% { transform: rotate(360deg); }
+	}
+
+
+	/* Force show scrollbar on macs */
+	/*@media all {
+	    ::-webkit-scrollbar {
+	        -webkit-appearance: none;
+	        width: 5px;
+	    }
+	    ::-webkit-scrollbar-thumb {
+	        border-radius: 4px;
+	        background-color: rgba(0,0,0,.5);
+	        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+	    }
+	}*/
+
+</style>
+
+
+
+<script>
+
+	(function ($) {
+	    $.fn.delayOnEvent = function(onevent, callback, ms){
+	        $(this).on(onevent, function( event ){
+	            var srcEl = event.currentTarget;
+	            if( srcEl.delayTimer )
+	                clearTimeout ( srcEl.delayTimer );
+	            srcEl.delayTimer = setTimeout(function(){ callback( $(srcEl) ); }, ms);
+	        });
+	        return $(this);
+	    };
+	})(jQuery);
+
+
+	$(document).ready(function(){
+
+	});
+
+
+	function showDiscussions(a) {
+        $('.discussion'.concat(a)).toggle();
+
+        $("span.glyphicon." + a).toggleClass('glyphicon-triangle-right')
+        $("span.glyphicon." + a).toggleClass('glyphicon-triangle-bottom')
+    }
+
+
+	var term = $('.term').find(":selected").text();
+
+	$('.term').on('change', function() {
+	 	term = $('.term').find(":selected").text()
+	 	$(".body option:selected").prop("selected", false)	//unselect subjects
+	 	$('#classes').html("");	//remove classes data
+	 	$('#overview').html(""); //remove overview data
+	});
+
+
+
+	$('#subjects').delayOnEvent('change', function() {
+
+		var subject = $('#subjects').find(":selected").text();
+
+		$('#classes').html("");
+		$('.loading').show();
+		$(".loader").show();
+
+		$.ajax({
+			type: "GET",
+			url: "/classes/" + term + "/" + subject , 
+			dataType: "html",
+			success: function(data) {
+			    $('#classes').html(data);
+			    $('.loading').hide();
+				$(".loader").hide();
+			}
+		});
+
+	 	$('#overview').html(""); //remove overview data
+
+	}, 400);
+
+
+	// $('#classes').delayOnEvent('change', function() {
+
+	// 	var course = $('#classes').find(":selected").text();
+
+	// 	$('.loading').show();
+	// 	$(".loader").show();
+
+	// 	$.ajax({
+	// 		type: "GET",
+	// 		url: "/overview/" + term + "/" + course ,  // or just url: "/my-url/path/"
+	// 		dataType: "html",
+	// 		success: function(data) {
+	// 		    $('#overview').html(data);
+	// 		    $('.loading').hide();
+	// 			$(".loader").hide();
+	// 		}
+	// 	});
+
+	// }, 400);
+	
+
+
+
+	function searchFunction(card) {
+		var input, filter, sect, table, divs;
+		sect = document.getElementsByClassName(card)[0];
+		input = sect.getElementsByClassName("search")[0];
+		filter = input.value.toUpperCase();
+		table = sect.getElementsByClassName("body")[0];
+		divs = table.getElementsByTagName("select")[0];
+		divs = divs.getElementsByTagName("option");
+		for (i = 0; i < divs.length; i++) {
+		  if (divs[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+		    divs[i].style.display = "";
+		  } else {
+		    divs[i].style.display = "none";
+		  }
+		}       
+	}
+
+
+</script>
+
+
+

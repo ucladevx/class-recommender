@@ -1,0 +1,52 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+
+{% block header %}
+    {% if request.user.is_authenticated %}
+        <!--  {{ user.username }} -->
+    {% else %}
+        Login
+    {% endif %}
+
+{% endblock %}
+
+
+
+<!-- {{ urls}}{{ forloop.counter }} }} -->
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+
+        <h3 align="left">Manage Scans</h3></th>
+        <br>
+
+        <div style="border: none; overflow-x: visible;" class="table-responsive">
+            <table id="tbl" style="width:100%">
+                <tbody style="display: block; width: 1000px; height:350px; overflow-y: auto">
+                {% for course, term, sections, check in data %}
+                    <tr>
+                        <td style="padding-right:1em">
+                            <a onclick="loading()"  href="/remove/{{ course }}">
+                                <button>Remove</button>
+                            </a>
+                        </td>
+                        <td style="padding-right:1em">
+                            <a href="/sections/{{ term }}/{{ course }}/{{ check }}">
+                                <button>Edit</button>
+                            </a>
+                        </td>
+                        <td>
+                            <h4 align="left">{{ course }}<br>{{ sections }}</h4>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    {% endif %}
+
+{% endblock %}

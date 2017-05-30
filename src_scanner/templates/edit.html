@@ -1,0 +1,46 @@
+<!-- account.html -->
+{% extends "base.html" %}
+
+
+
+{% block header %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+
+    	<form method="post" action="">
+    		{% csrf_token %}
+	    	{{ form }}
+	    	<button type="submit" value="Register">Update</button>
+	    </form>
+
+	    <div id="snackbar">{{ message }}</div>
+
+    {% endif %}
+
+    <script>
+	    function fixPhone(){
+	            phone_number = $('#id_phone_number').val()
+	            console.log(phone_number)
+	            if (phone_number=="+"){
+	                phone_number = "+1";
+	            } else if (phone_number[0]=="1"){
+	                phone_number = "+" + phone_number;
+	            } else if (phone_number.substr(0,2)!="+1"){
+	                phone_number = "+1" + phone_number;
+	            }
+	            $('#id_phone_number').val(phone_number)
+	        }
+
+	        $('#id_phone_number').on('keyup', function() {
+	             fixPhone();
+	        });
+	        
+    </script>
+
+{% endblock %}

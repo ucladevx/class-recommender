@@ -1,0 +1,46 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+
+{% block header %}
+    {% if request.user.is_authenticated %}
+        Welcome
+        <br><br>
+        <a href="/home/SummerSessionA"><button style="height:80px;width:300px">Summer Session A</button></a>
+        <a href="/home/SummerSessionC"><button style="height:80px;width:300px">Summer Session C</button></a>
+    {% else %}
+        Login
+    {% endif %}
+
+{% endblock %}
+
+
+<!-- {{ urls}}{{ forloop.counter }} }} -->
+
+{% block content %}
+
+    
+
+    {% if not request.user.is_authenticated %}
+
+        {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        <form class="form" method="post" action="." >{% csrf_token %}
+            <input type="text" placeholder="Username or Email" name="username">
+            <input type="password" placeholder="Password" name="password">
+            <button type="submit"  value="Login" id="login-button">Login</button>
+            <button type="button" onclick="window.location.href='/register/' ">Register</button>
+            <input type="hidden" name="next" value="/" />
+        </form>
+        <a href="/password_reset">Forgot Password?</a>
+
+    {% endif %}
+
+
+
+
+    
+
+{% endblock %}

@@ -1,0 +1,8 @@
+Flask
+Flask-OAuth
+gevent
+flask-cors
+Werkzeug
+requests
+boto3
+flask-boto3

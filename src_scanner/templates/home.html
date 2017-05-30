@@ -1,0 +1,62 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+
+
+{% block header %}
+    {% if request.user.is_authenticated %}
+        Start scanning for {{ head}}<!--  {{ user.username }} -->!
+        Choose a Subject.
+    {% else %}
+        Login
+    {% endif %}
+
+{% endblock %}
+
+
+<!-- {{ urls}}{{ forloop.counter }} }} -->
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+
+        <h3 align="left">Subject Areas</h3>
+
+        <input type="text" id="search" class="form-control" style="width: 300px;"
+        onkeyup="searchFunction()" placeholder="Search..." title="Search"><br>
+
+        <div style="border: none" class="table-responsive">
+            <table id="tbl" >
+                <tbody style="display: block; height: 300px; width: 100%; padding-right: 30px; overflow-y: auto">
+                {% for subject in subjects %}
+                    <tr align="left">
+                        <td><a href="/courses/{{ term }}/{{ subject }}"> {{ subject }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    {% endif %}
+
+    {% if not request.user.is_authenticated %}
+
+        {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        <form class="form" method="post" action="." >{% csrf_token %}
+            <input type="text" placeholder="Username" name="username">
+            <input type="password" placeholder="Password" name="password">
+            <button type="submit"  value="Login" id="login-button">Login</button>
+            <button type="button" onclick="window.location.href='/register/' ">Register</button>
+            <input type="hidden" name="next" value="/home" />
+        </form>
+
+    {% endif %}
+
+
+
+
+{% endblock %}

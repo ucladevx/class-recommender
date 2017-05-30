@@ -1,0 +1,36 @@
+<!-- account.html -->
+{% extends "base.html" %}
+
+
+
+{% block header %}
+    
+{% endblock %}
+
+
+
+{% block content %}
+    
+    <h2 align="left">Contact</h2>
+    
+    <br>
+
+    <h4 align="left">For questions, problems, bugs, and requests, send a message here.</h4>
+
+    <textarea name="message" form="send"></textarea>
+    <form action="." method="post" id="send">
+        {% csrf_token %}
+	    <input style="margin-left: 0px" type="submit" value="Send">
+	</form>
+
+	<br>
+    <h5 align="left">ClassScanner is not affiliated in any way with the University of California, Los Angeles (UCLA).</h5>
+
+    <script>
+        
+    </script>
+
+
+{% endblock %}
+
+

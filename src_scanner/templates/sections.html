@@ -1,0 +1,350 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+{% load index %}
+{{ List|index:x }}
+
+
+{% block header %}
+    {% if request.user.is_authenticated %}
+        Choose Sections<!--  {{ user.username }} -->
+    {% else %}
+        Login
+    {% endif %}
+
+{% endblock %}
+
+
+<!-- {{ urls}}{{ forloop.counter }} }} -->
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+
+        <button style="height:40px;width:200px" onclick="goBack()">Back to Courses</button>
+
+        <h3 align="left">
+            {{ course }}&nbsp
+            <a style="color:#0000FF" href="{{ url }}" target="_blank">(view on registrar)</a> 
+        </h3>
+
+        <h4 style="color:#b80000;" align="left">Enrollment Numbers may not be up to date</h4>
+
+        <div style="border: none" class="table-responsive" id="wrapper">
+
+        <table id="tbl" style="float:left;" >
+
+            <tbody style="display: block; overflow-y: auto; height: 250px; width: 100%; padding-right: 30px;">
+
+                <th style="padding-right: 5em">Section</th>
+                <th style="padding-right: 5em">Status</th> 
+                <th style="padding-right: 5em">Day/Time</th>
+                <th style="padding-right: 5em">Location</th>
+                <th style="padding-right: 5em">Instructor</th>
+                <th>Bruinwalk</th>
+
+                {% for key, value in data %}
+                {% with arg=key|split:" "|join:"" %} 
+
+                    <tr style="padding-right:100px" align="left">
+                        {% if value %}
+                            <td style="padding-right: 2em;" class="lec" 
+                            onclick="showDiscussions('{{ arg }}', '{{ key }}')">
+                                <label>
+                                    <span class="glyphicon glyphicon-triangle-right {{ arg }}"></span>
+                                    {{ key }}
+                                </label>
+                            </td>
+                        {% else %}
+                            <td style="padding-right: 2em" class="lec">
+                                <label>
+                                    <input class="check" type="checkbox" name="" value="{{ key }}">
+                                    {{ key }}
+                                </label>
+                            </td>
+                        {% endif %}
+                        <td style="padding-right: 2em" >{{ statuses|index:iterator1.next }}</td>
+                        <td style="padding-right: 2em">{{ day_times|index:iterator2.next }}</td>
+                        <td style="padding-right: 2em">{{ locations|index:iterator3.next }}</td>
+                        <td style="padding-right: 2em">{{ instructors|index:iterator4.next }}</td>
+                        <td>
+                            <a style="color:#0000FF; float:right;" href="#" onclick="showDistribution('{{ grades|index:iterator5.next }}')"> 
+                                Show Distribution
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% for discussion in value %}
+                        <tr align="left" class="discussion{{ arg }}" 
+                        style="display:none;">
+                            <td>
+                                <label>
+                                    &nbsp&nbsp&nbsp
+                                    <input class="check" type="checkbox" name="{{ key }}" value="{{ key }}:{{ discussion }}">
+                                    {{ discussion }}
+                                </label>
+                            </td>
+                            <td style="padding-right: 2em">{{ statuses|index:iterator1.next }}</td>
+                            <td style="padding-right: 2em">{{ day_times|index:iterator2.next }}</td>
+                            <td style="padding-right: 2em">{{ locations|index:iterator3.next }}</td>
+                            <td style="padding-right: 2em">{{ instructors|index:iterator4.next }}</td>
+                        </tr>
+                    {% endfor %}
+
+                {% endwith %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        <br>
+
+
+        <!-- START SCANNING -->
+        <form action="/scan/{{ term }}/{{ course }}" method="post" style="float:left; padding-left:30px;">
+
+            {% csrf_token %}
+
+            <input type="hidden" id="l" name="sections" value="">
+            <h4 align="left" id="t"></h4>
+
+            <a onclick="loading()">
+                <button id="scan" type="submit" style="height:40px; width:200px; float:left; display: none;">Click To Scan</button>
+            </a>
+
+        </form>
+
+        <br><br>
+
+        <a id="clear" style="float:left; padding-left:30px; padding-top:58px; display: none" onclick="clearChecks()"> 
+            <button style="height:40px; width:200px;">Clear</button>
+        </a>
+
+        
+
+    </div>
+
+    
+
+
+    {% endif %}
+
+        <style>
+
+            th, .lec {
+                font-weight: bold; 
+            }
+            thead {
+                border-bottom: 1px solid black;
+            }
+            th, td {
+                border: 0px solid black;
+                border-collapse: collapse;
+                padding: 3px;
+            }
+            .lec {
+                cursor: pointer;
+            }
+
+        </style>
+
+
+        <script>
+
+            function hideDistribution(){
+                var elems = ["#tbl", "h4", "h3", "button"];
+                for (var i in elems) {
+                    $(elems[i]).css('filter', "");
+                    $(elems[i]).css('pointer-events', 'auto');
+                }
+
+                $("#myChart").remove();
+                $("#close").hide();
+                $("#snackbar").hide();
+            }
+
+            function showDistribution(grades){
+
+                $("#myChart").remove();
+
+                // $("#wrapper").prepend("<canvas id='myChart'></canvas>");
+
+                $(".graph").prepend("<canvas id='myChart'></canvas>");
+                $(".graph").css('z-index', '9998');
+                // $(".graph").show();
+                $("#close").show();
+                $("#close").css('z-index', '9999');
+                var elems = ["#tbl", "h4", "h3", "button"];
+                for (var i in elems) {
+                    $(elems[i]).css('filter', "blur(7px)");
+                    $(elems[i]).css('pointer-events', 'none');
+                }
+                $("body").mousedown(hideDistribution);
+                
+
+                var list = JSON.parse(grades);
+                if (list.length==0) {
+                    $("#snackbar").html("No Grades Available");
+                    showSnack(2000);
+                }
+
+
+                var ctx = document.getElementById("myChart");
+                ctx.style.width = "500px";
+                ctx.style.height = "250px";
+
+
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"],
+                        datasets: [{
+                            data: list,
+                            backgroundColor:'rgba(30,144,255,0.75)',
+                            // borderColor: 'rgba(255, 206, 86, 1)',
+                            // borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true,
+                                    callback: function(value, index, values) {
+                                        return parseInt(value) + "%";
+                                    },
+                                    fontColor: '#000',
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontColor: '#000',
+                                }
+                            }],
+                        },
+                        legend: {
+                            display: false,
+                        },
+                        responsive: false,
+                        tooltips: {
+                            displayColors: false,
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    // console.log(data);
+                                    // console.log(tooltipItem);
+                                    return tooltipItem.yLabel + "%";
+                                },
+                            },
+                        },
+                    }
+                });
+            }
+
+
+            function showDiscussions(a, b) {
+                $('.discussion'.concat(a)).toggle();
+
+                $("span.glyphicon." + a).toggleClass('glyphicon-triangle-right')
+                $("span.glyphicon." + a).toggleClass('glyphicon-triangle-bottom')
+
+                updateText();
+            }
+
+            function clearChecks() {
+                $('input:checkbox').removeAttr('checked');
+                $("span.glyphicon").addClass('glyphicon-triangle-right')
+                $("span.glyphicon").removeClass('glyphicon-triangle-bottom')
+                $('[class*="discussion"]').hide();
+                updateText();
+            }
+
+            function init_checked_sections(){
+                if ("{{ check }}"=="None"){
+                    return;
+                }
+                to_check = "{{ check }}".split(",")
+                for (var i in to_check){
+                    if (to_check[i].indexOf(':') > -1){
+                        var lec = to_check[i].split(': ')[0]
+                        var discussions = to_check[i].split(': ')[1]
+                        discussions = discussions.split("|*|")
+                        for (var j in discussions){
+                            $("input[type=checkbox][value='" + lec + ":" + discussions[j] + "']").prop("checked","true");
+                        }
+                    } else {
+                        $("input[type=checkbox][value='" + to_check[i] + "']").prop("checked","true");
+                    }
+                }
+                $("span.glyphicon").toggleClass('glyphicon-triangle-right')
+                $("span.glyphicon").toggleClass('glyphicon-triangle-bottom')
+                $('[class*="discussion"]').toggle();
+                updateText();
+            }
+
+            function updateText() {
+                var checkedValues = $('.check:checked').map(function() {
+                    return this.value;
+                }).get();
+                
+                var dictionary = {};
+
+                for (var key in checkedValues) {
+                  if (checkedValues.hasOwnProperty(key)) {
+                    if (checkedValues[key].indexOf(':') > -1)
+                    {
+                        var item = checkedValues[key].split(":")[0];
+                        var sec = checkedValues[key].split(":")[1];
+
+                        if (!(item in dictionary)){
+                            dictionary[item] = new Array();
+                            dictionary[item].push(sec);
+                        }
+                        else
+                            dictionary[item].push(sec);
+
+                    } else {
+                        var item = checkedValues[key];
+                        dictionary[item] = new Array();
+                    }
+                  }
+                }
+
+                var hidden_text = "";
+                var shown_text = "";
+               for (var key in dictionary) {
+                    if (!dictionary[key].length){
+                        shown_text += key + "<br>";
+                        hidden_text += key + "<br>";
+                    } else {
+                        shown_text += key + ": " + dictionary[key].join(", ") + "<br>";
+                        hidden_text += key + ": " + dictionary[key].join("|*|") + "<br>";
+                    }
+                    
+               }
+
+
+                $('#l').val(hidden_text);
+                $('#t').html(shown_text);
+
+                if (shown_text!=""){
+                    $('#scan').show();
+                    $('#clear').show();
+                } else {
+                    $('#scan').hide();
+                    $('#clear').hide();
+                }
+                    
+
+            }
+
+            $('.check').change(function(){
+                updateText();
+            });
+
+
+
+        </script>
+
+{% endblock %}
+
+

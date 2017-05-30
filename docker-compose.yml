@@ -1,0 +1,20 @@
+version: '2'
+services:
+    src_planner:
+        build: ./src_planner
+        ports:
+            - "5000:5000"
+        environment:
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
+    src_scanner:
+        build: ./src_scanner
+        ports:
+            - "8000:8000"
+        environment:
+            - AWS_ACCESS_KEY_ID
+            - AWS_SECRET_ACCESS_KEY
+    static:
+        build: ./static
+        ports:
+            - "80:80"

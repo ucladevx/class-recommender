@@ -1,0 +1,46 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+
+{% block header %}
+    {% if request.user.is_authenticated %}
+        Choose a Course<!--  {{ user.username }} -->
+    {% else %}
+        Login
+    {% endif %}
+
+{% endblock %}
+
+
+
+<!-- {{ urls}}{{ forloop.counter }} }} -->
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+
+        <button style="height:40px;width:200px" onclick="goBack()">Back to Subjects</button>
+
+        <h4 align="left">{{ subject }} Courses</h4>
+
+        <input type="text" id="search" class="form-control" style="width: 300px;"
+        onkeyup="searchFunction()" placeholder="Search..." title="Search"><br>
+
+        <div style="border: none" class="table-responsive">
+            <table id="tbl">
+                <tbody style="display: block; height: 300px; width: 100%; padding-right: 30px; overflow-y: auto">
+                {% for course, course_to_display in courses %}
+                    <tr align="left">
+                        <td><a href="/sections/{{ term }}/{{ course }}/None">{{ course_to_display }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    {% endif %}
+
+    
+
+{% endblock %}

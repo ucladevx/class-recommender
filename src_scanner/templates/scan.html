@@ -1,0 +1,59 @@
+<!-- login.html -->
+{% extends "base.html" %}
+
+{% load index %}
+{{ List|index:x }}
+
+
+{% block header %}
+    {% if request.user.is_authenticated %}
+        <!--  {{ user.username }} -->
+    {% else %}
+        Login
+    {% endif %}
+
+{% endblock %}
+
+
+<!-- {{ urls}}{{ forloop.counter }} }} -->
+
+{% block content %}
+    
+    {% if error %}
+
+    <h1> {{ error }} </h1>
+
+    {% else %}
+
+    {% if request.user.is_authenticated %}
+
+        <div align="left">
+            <h3>Now scanning! Confirmation text sent.</h3>
+            <h4 style="color:#b80000;">
+                If you did not receive a text, <a style="color:#0000FF" href="/account">check</a> your phone number and carrier.<br>
+                Otherwise, <a style="color:#0000FF" href="/contact">contact</a> the administrator
+            </h4><br>
+            <h4>Added {{ course }}:</h4>
+            <h4 align="left">{{ sections|linebreaks }}</h4><br>
+            <a style="padding-right:20px;" href="/home"><button style="height:40px;width:200px;">Find more classes to scan</button></a>
+            <a href="/manage"><button style="height:40px;width:200px">Manage Scans</button></a>
+        </div>
+    {% endif %}
+
+    {% endif %}
+
+        <style>
+
+
+        </style>
+
+
+        <script>
+
+            
+
+        </script>
+
+{% endblock %}
+
+

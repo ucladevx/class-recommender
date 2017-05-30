@@ -1,0 +1,2 @@
+worker: celery -A mysite worker -l info --without-gossip --without-mingle --without-heartbeat
+celery_beat: celery -A mysite beat -l info -S django 
